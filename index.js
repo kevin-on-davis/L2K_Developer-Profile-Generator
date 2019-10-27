@@ -1,20 +1,13 @@
-// const questions = [
-
-// ];
-
-// function writeToFile(fileName, data) {
-
-// }
-
-// function init() {
-
-// init();
-
-
 const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
-const html_gen = require("./generateHTML.js");
+const generateHTML = require("./generateHTML");
+
+const html_gen = new generateHTML;
+
+const pdf = require('html-pdf');
+// const html = fs.readFileSync('./generateHTML.js', 'utf8');
+const options = { format: 'Letter' };
 
 inquirer
     .prompt([{
@@ -34,26 +27,17 @@ inquirer
     }])
     .then(function ({ username, color }) {
         const queryUrl = `https://api.github.com/users/${username}`;
-        debugger;
-        html_gen.prototype.generateHTML(color);
-        axios.get(queryUrl).then(function (res, err) {
-            console.log(res.data.name);
+
+        axios.get(queryUrl).then(function (bio, err) {
+            const html = html_gen.generateHTML(bio, color);
+            pdf.create(html, options).toFile('.' + username + '.pdf', function (err, res) {
+                if (err) return console.log(err);
+            });
+
             if (err) {
                 throw err;
             };
 
-            // const repoNames = res.data.map(function (repo) {
-            //     return repo.name;
-            // });
-
-            // const repoNamesStr = repoNames.join("\n");
-
-            // fs.writeFile("repos.txt", repoNamesStr, function (err) {
-            //     if (err) {
-            //         throw err;
-            //     }
-
-            //     console.log(`Saved ${repoNames.length} repos`);
         });
     });
 

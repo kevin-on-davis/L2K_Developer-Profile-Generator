@@ -1,10 +1,9 @@
-class PDFFormat {
-  constructor(color_picked) {
-    this.color_picked = color_picked;
+class generateHTML {
+  constructor() {
   }
 
 
-  generateHTML(color_picked) {
+  generateHTML(bio, color_picked) {
 
     const colors = {
       green: {
@@ -177,8 +176,40 @@ class PDFFormat {
             zoom: .75; 
           } 
          }
-      </style>`
+      </style>
+    </head>
+
+    <body>
+      <div class="row  wrapper">
+        <div class="photo-header img" style="background-color:green">
+            <img id="profilepic" class="photo-header" src="${bio.data.avatar_url}">
+            <h1 style="font-size:5vw" style="padding: 2vw">${bio.data.name}</h1>
+            <h3 style="font-size:3vw">${bio.data.bio}</h3>
+        </div>
+        <div class="container">
+            <a href="${bio.data.html_url}">GitHub</a><br />
+            <a href="${bio.data.email}">${bio.data.email}</a>
+        </div>
+        <div class="col-4>"></div>
+          <div class="container col-6">
+            <div class="card">
+              <p>Public Repositories :  ${bio.data.public_repos}</p>
+            </div>
+            <div class="card">
+              <p>GitHub Stars : 0</p>
+            </div>
+          </div>
+          <div class="container col-6">
+            <div class="card">
+              <p>Followers : ${bio.data.followers}</p>
+            </div>
+            <div class="card">
+              <p>Following : ${bio.data.following}</p>
+            </div>
+          </div>
+        </div>
+      </body>`
   }
 }
 
-module.exports = PDFFormat;
+module.exports = generateHTML;
