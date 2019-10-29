@@ -30,7 +30,7 @@ inquirer
 
         axios.get(queryUrl).then(function (bio, err) {
             const html = html_gen.generateHTML(bio, color);
-            pdf.create(html, options).toFile('.' + username + '.pdf', function (err, res) {
+            pdf.create(html, options).toFile(username + '.pdf', function (err, res) {
                 if (err) return console.log(err);
             });
 
